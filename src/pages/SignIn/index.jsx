@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { Container, Content, Header } from './styles'
 
@@ -15,9 +16,9 @@ const SignIn = () => {
 
         <Content>
            
-            <button>
+            <Link to='/converter'>
             <span>Fazer autenticação</span>
-            </button>
+            </Link>
         </Content>
     </Container>
     </>

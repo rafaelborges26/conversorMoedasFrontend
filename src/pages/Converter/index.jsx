@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FiChevronLeft, FiRepeat, FiRotateCw } from 'react-icons/fi'
 
 
-import { Container, Content, Header } from './styles'
+import { Container, Content, Header, Section } from './styles'
 
 
 const Converter = () => {
@@ -11,10 +12,10 @@ const Converter = () => {
 
         <Header>
             <p>Conversor de Moedas</p>
-            <a href="/converter">
-            <FiChevronLeft />
+            <Link to="/">
+            <FiChevronLeft size={16} />
                 voltar
-            </a>
+            </Link>
         </Header>
 
         <Content>
@@ -52,6 +53,29 @@ const Converter = () => {
             </button>
 
         </Content>
+
+        <Section>
+            <p>Resultados da conversão:</p>
+            <ul>
+                <li>
+                    <span>Conversão de: BRL</span> <strong>para: US</strong>  
+                   <p>Valor a converter: 1,00  <strong>Resultado da conversão: 5,00 </strong> </p> 
+                </li>
+                <li>
+                    <span>Conversão de: BRL</span> <strong>para: US</strong>  
+                   <p>Valor a converter: 1,00  <strong>Resultado da conversão: 5,00 </strong> </p> 
+                </li>
+                <li>
+                    <span>Conversão de: BRL</span> <strong>para: US</strong>  
+                   <p>Valor a converter: 1,00  <strong>Resultado da conversão: 5,00 </strong> </p> 
+                </li>
+                <li>
+                    <span>Conversão de: BRL</span> <strong>para: US</strong>  
+                   <p>Valor a converter: 1,00  <strong>Resultado da conversão: 5,00 </strong> </p> 
+                </li>
+                
+            </ul>
+        </Section>
 
     </Container>
     )
