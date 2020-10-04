@@ -18,6 +18,8 @@ export const Header = styled.div`
 
     p {
         font-size: 40px;
+        font-weight: bold;
+        color: #3A3A3A;
     }
 
     a {
@@ -37,26 +39,24 @@ export const Content = styled.div`
     margin: 120px 80px 80px 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
+
+    
 
     width: 100%;
+
+    Form {
+        display: flex;
+        flex: 1;
+    }
 
     div {
         display: flex;
         flex-direction: column;
         margin-left: 0px;
 
-        input {
-        flex: 1;
-        height: 70px;
-        padding: 0 24px;
-        border-radius: 5px 0 5px 0;
-        color: #3a3a3a;
-
-        &::placeholder {
-            color: #a8a8b3;
-        }
-        
+        span {
+            font-size: 24px;
+            margin-bottom: 5px;
         }
 
 
@@ -67,7 +67,7 @@ export const Content = styled.div`
     }
 
     button {
-        
+        margin-top: 24px;
     }
 
     div {
@@ -78,7 +78,16 @@ export const Content = styled.div`
 
 export const Section = styled.div`
     display: flex;
-    
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    h3 {
+        font-size: 18px;
+        color: #3A3A3A;
+        margin-top: 4px;
+    }
+
     ul {
         display: flex;
         list-style: none;
@@ -91,12 +100,13 @@ export const Section = styled.div`
             span {
                 font-size: 36;
                 color: #3d3d4d;
-            
             }
 
             strong {
                 font-size: 36;
                 color: #3d3d4d;
+                font-weight: normal;
+                
             }
             
         }
