@@ -56,7 +56,8 @@ export const Content = styled.div`
 
         span {
             font-size: 24px;
-            margin-bottom: 5px;
+            margin-bottom: 12px;
+            margin-left: 20px;
         }
 
 

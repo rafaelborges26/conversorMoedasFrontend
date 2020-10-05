@@ -14,26 +14,51 @@ const Converter = () => {
     const formRef = useRef(null) 
     
     const [converted, setConverted] = useState([{}])
+    const [typeConvert, setTypeConvert] = useState('')
+    const [typeConverted, setTypeConverted] = useState('')
+    const [valueConverted, setValueConverted] = useState(Number)
+
 
     useEffect(() => {
         api.get('/converter').then(response => {
             const valuesConverted = response.data.converter
 
-            setConverted(valuesConverted)
-            
+            setConverted(valuesConverted)            
         })
-
-        apiRates.get(`/latest?base=BRL`).then(response => {
-            const rates = response.data
-            console.log(rates)
-        })
-
-
 
     },[converted])
 
+    useEffect(() => {
+        
+        {
+                apiRates.get(`/latest?base=${typeConvert}`).then(response => {
+                    
+                    if(typeConverted){
+
+                    if(typeConverted === 'BRL') {
+                        console.log(response.data.rates.BRL)
+                    }else if(typeConverted === 'USD') {
+                        console.log(response.data.rates.USD)
+                    }else if(typeConverted === 'CAD') {
+                        console.log(response.data.rates.CAD)
+                    }else {
+                        console.log(response.data.rates.CAD) //tirar as funcoes q criei e aq
+                    }
+                }
+
+                })     
+        }
+
+        console.log("atualizou")
+    }, [typeConvert])
+
     const handleConvert = useCallback(async (data) => {
-    
+        
+        setTypeConvert(data.typeConvert)
+        setTypeConverted(data.typeConverted)
+
+        data.valueOutside = valueConverted
+
     try {
         await api.post('/converter', data);
  
@@ -60,32 +85,22 @@ const Converter = () => {
              <div id="valor"> 
                  <span>Valor</span>
                  <Input name="valueInside" type="text" placeholder="0,00"/>
-                 <Input name="valueOutside" type="text" placeholder="0,00"/>
-                 <Input name="typeConvert" type="text" placeholder=""/>
-                 <Input name="typeConverted" type="text" placeholder=""/>
+                 <Input name="valueOutside" type="text" placeholder="0,00" />
              </div>
 
              <div id="de"> 
                  <span>Converter de</span>
 
-                 <select name="typeConvert">
-                     <option value="BRL">Real(BRL)</option>
-                     <option value="USD">Dólar dos Estados Unidos (USD)</option>
-                     <option value="CAD">Dólar Canadense (CAD)</option>
-                 </select>
+                 <Input name="typeConvert" type="text" placeholder="BRL" />
              </div>
 
-             <div id="para"> 
+             <div id="para">
                  <span>Para</span>
 
-                 <select name="typeConverted">
-                     <option value="BRL">Real(BRL)</option>
-                     <option value="USD">Dólar dos Estados Unidos (USD)</option>
-                     <option value="CAD">Dólar Canadense (CAD)</option>
-                 </select>
+                 <Input name="typeConverted" type="text" placeholder="US"/>
              </div>
 
-             <button type="submit">
+             <button type="submit" >
                  <FiRotateCw size={18}/>
              </button>
 
