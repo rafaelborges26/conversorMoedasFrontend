@@ -7,6 +7,8 @@ import apiRates from '../../services/exchangeRates'
 import { Form } from '@unform/web'
 
 import Input from '../../components/Input'
+import Select from '../../components/Select'
+
 import { Container, Content, Header, Section } from './styles'
 
 const Converter = () => {
@@ -17,7 +19,7 @@ const Converter = () => {
     const [typeConvert, setTypeConvert] = useState('')
     const [typeConverted, setTypeConverted] = useState('')
     const [valueConverted, setValueConverted] = useState(Number)
-
+    const [valueIn, setValueIn] = useState(Number)
 
     useEffect(() => {
         api.get('/converter').then(response => {
@@ -29,45 +31,58 @@ const Converter = () => {
     },[converted])
 
     useEffect(() => {
-        
-        {
                 apiRates.get(`/latest?base=${typeConvert}`).then(response => {
                     
-                    if(typeConverted){
-
-                    if(typeConverted === 'BRL') {
-                        console.log(response.data.rates.BRL)
-                    }else if(typeConverted === 'USD') {
-                        console.log(response.data.rates.USD)
-                    }else if(typeConverted === 'CAD') {
-                        console.log(response.data.rates.CAD)
-                    }else {
-                        console.log(response.data.rates.CAD) //tirar as funcoes q criei e aq
-                    }
-                }
+                    const value = response.data.rates.BRL
+                    setValueConverted(value)
+                    console.log("set"+value)
 
                 })     
-        }
 
-        console.log("atualizou")
-    }, [typeConvert])
+    }, [typeConverted])
 
-    const handleConvert = useCallback(async (data) => {
+
+function getValueInside() {
+        setTimeout(() => {
+
+            let value = formRef.current.getFieldValue('valueInside')
+            setValueIn(value)
+
+            let convertType = formRef.current.getFieldValue('typeConvert')
+            setTypeConvert(convertType)
+
+            let convertedType = formRef.current.getFieldValue('typeConverted')
+            setTypeConverted(convertedType)
+
+            
+        },2000)
+}        
+
+    async function handleConvert(data) {
         
-        setTypeConvert(data.typeConvert)
-        setTypeConverted(data.typeConverted)
+        if(data.valueInside === ''){
+            alert("O campo valor está vazio")
+            return
+        }else if(data.typeConvert === data.typeConverted){
+            alert("Os campos de tipo da conversão estão iguais")
+            return
+        }
+        
+        await apiRates.get(`/latest?base=${data.typeConvert}`).then(response => {
 
-        data.valueOutside = valueConverted
+        const value = response.data.rates.BRL
+        setValueConverted(value)
+        console.log("aqq"+value)
+        data.valueOutside = value * data.valueInside
+    })
 
     try {
-        await api.post('/converter', data);
- 
+            api.post('/converter', data);
+        
      } catch (err) {
         console.log(err.response.error);
      }
-
-    },[])
-
+    }
     
     return (
     <Container>
@@ -81,23 +96,31 @@ const Converter = () => {
         </Header>
 
         <Content>
-        <Form initialData={{date: new Date()}} ref={formRef} onSubmit={handleConvert}>
+        <Form initialData={ {date: new Date()} } ref={formRef} onSubmit={handleConvert}>
              <div id="valor"> 
                  <span>Valor</span>
                  <Input name="valueInside" type="text" placeholder="0,00"/>
-                 <Input name="valueOutside" type="text" placeholder="0,00" />
+
              </div>
 
              <div id="de"> 
                  <span>Converter de</span>
 
-                 <Input name="typeConvert" type="text" placeholder="BRL" />
+                 <Select name="typeConvert">
+                    <option value="BRL">Real(BRL)</option>
+                    <option value="USD">Dólar dos Estados Unidos (USD)</option>
+                    <option value="CAD">Dólar Canadense (CAD)</option>
+                </Select>
              </div>
 
              <div id="para">
                  <span>Para</span>
 
-                 <Input name="typeConverted" type="text" placeholder="US"/>
+                 <Select name="typeConverted">
+                    <option value="BRL">Real(BRL)</option>
+                    <option value="USD">Dólar dos Estados Unidos (USD)</option>
+                    <option value="CAD">Dólar Canadense (CAD)</option>
+                </Select>
              </div>
 
              <button type="submit" >
