@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useHistory} from 'react-router-dom'
 import { FiChevronLeft, FiRepeat, FiRotateCw } from 'react-icons/fi'
 import api from '../../services/api'
 import apiRates from '../../services/exchangeRates'
+
 
 import { Form } from '@unform/web'
 
@@ -13,6 +14,7 @@ import { Container, Content, Header, Section } from './styles'
 
 const Converter = () => {
 
+
     const formRef = useRef(null) 
     
     const [converted, setConverted] = useState([{}])
@@ -21,6 +23,7 @@ const Converter = () => {
     const [valueConverted, setValueConverted] = useState(Number)
     const [valueIn, setValueIn] = useState(Number)
 
+    
     useEffect(() => {
         api.get('/converter').then(response => {
             const valuesConverted = response.data.converter
@@ -35,28 +38,10 @@ const Converter = () => {
                     
                     const value = response.data.rates.BRL
                     setValueConverted(value)
-                    //console.log("set"+value)
 
                 })     
 
     }, [typeConverted])
-
-
-function getValueInside() {
-        setTimeout(() => {
-
-            let value = formRef.current.getFieldValue('valueInside')
-            setValueIn(value)
-
-            let convertType = formRef.current.getFieldValue('typeConvert')
-            setTypeConvert(convertType)
-
-            let convertedType = formRef.current.getFieldValue('typeConverted')
-            setTypeConverted(convertedType)
-
-            
-        },2000)
-}        
 
     async function handleConvert(data) {
         
@@ -72,12 +57,13 @@ function getValueInside() {
 
         const value = response.data.rates.BRL
         setValueConverted(value)
-        console.log("aqq"+value)
+        
         data.valueOutside = value * data.valueInside
     })
 
     try {
-            api.post('/converter', data);
+
+           api.post('/converter', data); //adicionei o await
         
      } catch (err) {
         console.log(err.response.error);

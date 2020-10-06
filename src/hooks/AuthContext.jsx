@@ -30,18 +30,11 @@ export const AuthConverter = ({ children }) => {
         setData({token, user})
    }, [])
 
-    const signOut = useCallback(() => { //metodo para logout
-    localStorage.removeItem('@Converter.token')
-    localStorage.removeItem('@Converter.user')
-
-    setData({})
-    },[])
-
-    return (
-        <AuthContext.Provider value={{user: data.user, signIn, signOut}} >
-            {children}
-        </AuthContext.Provider>
-    )
+   return (
+    <AuthContext.Provider value={{user: data.user, signIn }} >
+        {children}
+    </AuthContext.Provider>
+)
 }
 
 export function useAuth() {
