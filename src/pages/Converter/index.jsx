@@ -38,10 +38,12 @@ const Converter = () => {
                     
                     const value = response.data.rates.BRL
                     setValueConverted(value)
+                    //console.log("set"+value)
 
                 })     
 
     }, [typeConverted])
+
 
     async function handleConvert(data) {
         
@@ -54,8 +56,15 @@ const Converter = () => {
         }
         
         await apiRates.get(`/latest?base=${data.typeConvert}`).then(response => {
-
-        const value = response.data.rates.BRL
+            let value
+            if(data.typeConverted === 'BRL') {    
+                value = response.data.rates.BRL
+            } else if(data.typeConverted === 'USD') {
+                    value = response.data.rates.USD
+            } else if(data.typeConverted === 'CAD') {
+                    value = response.data.rates.CAD
+            }
+        
         setValueConverted(value)
         
         data.valueOutside = value * data.valueInside
@@ -63,7 +72,7 @@ const Converter = () => {
 
     try {
 
-           api.post('/converter', data); //adicionei o await
+           await api.post('/converter', data); //adicionei o await
         
      } catch (err) {
         console.log(err.response.error);

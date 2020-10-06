@@ -15,8 +15,6 @@ const Route = ({
 
     const { user } = useAuth() //se exitir a variavel significa q o user esta autenticado/logado
 
-        console.log(user, isPrivate)
-
     return (
         <ReactDOMRoute 
             {...rest}
