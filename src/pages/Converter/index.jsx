@@ -35,7 +35,7 @@ const Converter = () => {
                     
                     const value = response.data.rates.BRL
                     setValueConverted(value)
-                    console.log("set"+value)
+                    //console.log("set"+value)
 
                 })     
 

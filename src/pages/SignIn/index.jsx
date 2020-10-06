@@ -1,10 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { useAuth } from '../../hooks/AuthContext'
 import { Container, Content, Header } from './styles'
 
 const SignIn = () => {
     
+    const { signIn } = useAuth()
+
+    async function Logar() {
+    await signIn({
+        email: 'rafaelborges@gmail.com',
+        password: '123456'
+    })
+
+    }
+
     return (
     <>
     <Container>
@@ -16,9 +26,11 @@ const SignIn = () => {
 
         <Content>
            
-            <Link to='/converter'>
+
+
+            <button onClick={Logar}>
             <span>Fazer autenticação</span>
-            </Link>
+            </button>
         </Content>
     </Container>
     </>

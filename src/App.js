@@ -1,14 +1,17 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import SignIn from './pages/SignIn'
 import Routes from './routes'
+import AppConverter from './hooks'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <Router>
+      <AppConverter>
+        <Routes />
+      </AppConverter>
+    </Router>
     );
 }
 
