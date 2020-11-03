@@ -1,13 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Conversor de moedas
 
-In the project directory, you can run:
+Frontend do desenvolvimento de uma aplicação que converte valores de câmbios (CAD, US, R$) fazendo uso da api para obter os valores cambiais real: https://exchangeratesapi.io/
 
-### `yarn start`
+### `Para startar o projeto`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Rodar a aplicação em modo de desenvolvimento.<br />
+Abrir [http://localhost:3000](http://localhost:3000) pra visualizar no browser.
